@@ -21,6 +21,7 @@ import catgirlroutes.utils.rotation.Rotater
 import catgirlroutes.utils.rotation.RotationUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import net.minecraft.client.Minecraft

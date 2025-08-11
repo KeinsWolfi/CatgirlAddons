@@ -83,9 +83,8 @@ object AutoWeirdos: Module(
                 clickedBozos.add(entity.entityId)
             }
 
-        val correctNPC = mc.theWorld.loadedEntityList.find { it is EntityArmorStand && it.name.noControlCodes == correctBozo } ?: return
-        val room = currentRoom ?: return
-        correctChest = BlockPos(correctNPC.posX - 0.5, 69.0, correctNPC.posZ - 0.5).addRotationCoords(room.rotation, -1, 0)
+        correctChest = findCorrectChest()
+        if (correctChest == null) return
         blockArray.add(BlockAura.BlockAuraAction(correctChest!!, 6.0))
         addedChest = true
     }
@@ -93,10 +92,15 @@ object AutoWeirdos: Module(
     fun renderWorld() {
         if (!inDungeons || !weirdosSolver) return
         if (currentRoomName != "Three Weirdos") return
-        val correctNPC = mc.theWorld.loadedEntityList.find { it is EntityArmorStand && it.name.noControlCodes == correctBozo } ?: return
-        val room = currentRoom ?: return
-        correctChest = BlockPos(correctNPC.posX - 0.5, 69.0, correctNPC.posZ - 0.5).addRotationCoords(room.rotation, -1, 0)
+        correctChest = findCorrectChest()
+        if (correctChest == null) return
         drawBoxAtBlock(correctChest!!, Color.GREEN)
+    }
+
+    fun findCorrectChest(): BlockPos? {
+        val correctNPC = mc.theWorld.loadedEntityList.find { it is EntityArmorStand && it.name.noControlCodes == correctBozo } ?: return null
+        val room = currentRoom ?: return null
+        return BlockPos(correctNPC.posX - 0.5, 69.0, correctNPC.posZ - 0.5).addRotationCoords(room.rotation, -1, 0)
     }
 
     /**
